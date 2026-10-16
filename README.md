@@ -89,13 +89,17 @@ no lleva el correo.
 - **Copiar correo**: en un ordenador sin programa de correo configurado, un `mailto:`
   no hace nada; copiar la dirección siempre funciona.
 
-### Maquetas en vez de casos reales
+### Maquetas y tarjetas reales
 
 La sección de ejemplos muestra cuatro maquetas de móvil (artista, restaurante, evento,
 tienda) dibujadas con CSS, cada una con su paleta, y rotuladas como maqueta de ejemplo.
-La tarjeta de Qrafta es independiente y no enlaza a clientes. Cada maqueta se mide en
-`em` a partir de un solo ancho (`--ancho-movil`), así que el lightbox la amplía cambiando
-una variable, sin una segunda versión del dibujo.
+Cada maqueta se mide en `em` a partir de un solo ancho (`--ancho-movil`), así que el
+lightbox la amplía cambiando una variable, sin una segunda versión del dibujo.
+
+Debajo, **tarjetas reales** hechas por Qrafta, solo las que tienen permiso de sus
+dueños. Cada una lleva su QR, que en una reunión cumple su función de verdad: se
+enseña el móvil y la otra persona lo escanea con el suyo, igual que haría con la
+tarjeta impresa. Tocando el QR, o *Ver tarjeta*, se abre desde el mismo móvil.
 
 ### "Cómo funciona", en una frase
 
@@ -114,17 +118,17 @@ está». Es lo único que necesita saber quien la recibe.
   toque de 44 px como mínimo (comprobadas una a una), decoración marcada como
   `aria-hidden`, avisos leídos por lectores de pantalla y respeto a
   `prefers-reduced-motion` (la Q no se anima).
-- **El QR en pantalla** solo aparece en ordenador (pantalla ancha y ratón): desde el
-  móvil ya se está dentro.
 
-### Un solo origen para el QR
+### Un solo origen para cada QR
 
-El QR impreso y el de la pantalla salen de la misma llamada a
-`herramientas/generar-qr.py`, con la misma dirección: no puede haber uno impreso que
-lleve a un sitio distinto del de la web. El de la pantalla queda escrito dentro del
-HTML como un único trazo SVG (unos 1,5 KB), sin librerías ni imágenes. Va siempre
-oscuro sobre blanco, también en modo oscuro, porque muchos lectores no reconocen un
-QR invertido.
+El QR impreso de una tarjeta y el que aparece en esta página salen de la misma llamada
+a `herramientas/generar-qr.py`, con la misma dirección: no puede haber uno impreso que
+lleve a un sitio distinto. El de la página queda escrito dentro del HTML como un único
+trazo SVG (unos 1,5 KB), sin librerías ni imágenes. Va siempre oscuro sobre blanco,
+también en modo oscuro, porque muchos lectores no reconocen un QR invertido.
+
+Se descartó el QR de esta misma página en pantalla: lleva al sitio que ya se está
+mirando, y desde el móvil no se puede escanear.
 
 ## Descartado a propósito
 
@@ -148,7 +152,7 @@ imagenes/
   └── preview.jpg              Vista previa al compartir el enlace (1200 × 630)
 herramientas/
   ├── procesar-fotos.py        Originales → versiones web limpias de metadatos
-  └── generar-qr.py            Dirección → QR para imprimir y QR de la página
+  └── generar-qr.py            Dirección → QR para imprimir (y para la página)
 ```
 
 ## Añadir imágenes
@@ -168,10 +172,12 @@ cambia el nombre de las demás. Después, declarar `width` y `height` en el `<im
 ```bash
 py -m pip install segno        # una sola vez, solo en este equipo
 py herramientas/generar-qr.py https://qrafta.github.io/qrafta/
+py herramientas/generar-qr.py https://qrafta.github.io/cecilia-quignon/ --pagina cecilia-quignon
 ```
 
-Deja en `qr/` (no se publica) un SVG para imprenta y un PNG de 2000 px, y reescribe
-el QR de la página entre las marcas `<!-- QR:INICIO -->` y `<!-- QR:FIN -->`. Antes
+Deja en `qr/` (no se publica) un SVG para imprenta y un PNG de 2000 px con el nombre
+de la tarjeta (`qrafta.svg`, `cecilia-quignon.png`…). Con `--pagina`, además reescribe
+ese QR en `index.html`, entre `<!-- QR:INICIO <marca> -->` y `<!-- QR:FIN -->`. Antes
 de imprimir, escanear el PNG con un móvil y comprobar que abre la dirección buena:
 un QR impreso ya no se puede corregir.
 
