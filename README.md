@@ -4,7 +4,9 @@ La tarjeta digital de Qrafta: una sola página, pensada para abrirse desde un c�
 impreso. Hace dos trabajos a la vez: presenta Qrafta y sirve de escaparate de lo que
 puede llevar una tarjeta hecha por Qrafta.
 
-🔗 **Ver la página:** PENDIENTE (la dirección se fija al crear el repositorio)
+🔗 **Ver la página:** https://qrafta.github.io/qrafta/
+
+> **No renombrar el repositorio:** esa dirección es la que llevará el QR impreso.
 
 > **Estado: maqueta en curso.** El diseño es provisional y falta fijar la dirección
 > final (vista previa al compartir y QR). Los textos están terminados, y también el
@@ -153,7 +155,6 @@ cambia el nombre de las demás. Después, declarar `width` y `height` en el `<im
 
 ## Pendiente
 
-- [ ] Dirección final: `og:url`, `og:image`, la `url` del JSON-LD y el QR de escritorio
 - [ ] Generar el QR (pantalla e impreso) con la dirección final
 - [ ] Diseño y tipografía definitivos
 - [ ] Probar *Guardar contacto* y *Compartir* en un iPhone y un Android reales

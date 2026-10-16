@@ -27,14 +27,14 @@
      Telegram o redes sociales. La imagen DEBE ir con direccion
      completa (https://...), no vale una ruta relativa, y en JPG:
      muchas aplicaciones todavia no previsualizan WebP.
-     PENDIENTE: la direccion final. Cuando exista el repo, descomentar
-     og:url y og:image poniendo la direccion buena.
+     Direccion fijada el 17-10-2026 (repo Qrafta/qrafta). NO CAMBIARLA:
+     es la que llevara el QR impreso.
      ============================================================ -->
 <meta property="og:type"        content="website">
-<!-- <meta property="og:url"   content="https://qrafta.github.io/PENDIENTE/"> -->
+<meta property="og:url"         content="https://qrafta.github.io/qrafta/">
 <meta property="og:title"       content="Qrafta · Tarjetas digitales a medida">
 <meta property="og:description" content="Tarjetas de presentación digitales hechas a medida, que se abren desde un QR.">
-<!-- <meta property="og:image" content="https://qrafta.github.io/PENDIENTE/imagenes/preview.jpg"> -->
+<meta property="og:image"       content="https://qrafta.github.io/qrafta/imagenes/preview.jpg">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale"      content="es_ES">
@@ -42,13 +42,14 @@
 
 <!-- Ficha para buscadores (invisible). El correo NO va aqui a proposito:
      estaria escrito en claro y se saltaria la proteccion antispam.
-     PENDIENTE: anadir "url" con la direccion final. -->
+-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Qrafta",
   "description": "Tarjetas de presentación digitales a medida, que se abren desde un código QR.",
+  "url": "https://qrafta.github.io/qrafta/",
   "sameAs": ["https://www.instagram.com/qrafta.studio/"]
 }
 </script>
@@ -1128,7 +1129,7 @@ a { color: inherit; }
       </ul>
 
       <div class="botones">
-        <button class="boton boton--principal" type="button" data-accion="vcard">Guardar contacto</button>
+        <!-- Sin "Guardar contacto": ya esta en la cabecera y en "Pruébalo". -->
         <button class="boton" type="button" data-accion="copiar-correo">Copiar correo</button>
         <button class="boton" type="button" data-accion="compartir">Compartir</button>
       </div>
