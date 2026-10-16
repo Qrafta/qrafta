@@ -1,0 +1,35 @@
+# ============================================================
+# Repositorio PUBLICO: aqui solo entra lo que necesita la web.
+# Todo lo de abajo se queda en local.
+# ============================================================
+
+# --- Fotos originales -------------------------------------------------------
+# Resolucion completa y metadatos de camara. Lo que se publica son las
+# copias ya procesadas de imagenes/.
+fotos originales/
+fotos-originales/
+
+# --- Referencias de diseno --------------------------------------------------
+# Capturas e inspiracion para maquetar: pueden ser trabajo de otros, asi que
+# no se publican.
+referencias/
+
+# --- Copias de seguridad locales del HTML -----------------------------------
+Backups/
+
+# --- Documentos internos ----------------------------------------------------
+# Notas de trabajo y borradores de contenido. Si alguno lleva el correo en
+# texto plano y se sube, los robots de spam lo leen al instante y la
+# proteccion del index.html (que monta la direccion por trozos con JS) deja
+# de servir de nada.
+CLAUDE.md
+contenido-*.md
+notas*.md
+*.drawio
+*.drawio.png
+
+# --- Basura del sistema -----------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+__pycache__/

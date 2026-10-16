@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Qrafta · Tarjetas digitales a medida</title>
+<meta name="description" content="Qrafta: tarjetas de presentación digitales a medida, que se abren desde un código QR.">
+
+<!-- MIENTRAS SEA MAQUETA: pide a los buscadores que no la indexen, para que
+     no aparezca en Google con los textos a medias. QUITAR ESTA LINEA el dia
+     del lanzamiento. -->
+<meta name="robots" content="noindex">
+
+<!-- Color de la barra del navegador en el movil (claro / oscuro) -->
+<meta name="theme-color" content="#F6F1E9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1F1B2E" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+
+<!-- Icono de la pestana: la Q de puntos, dibujada aqui mismo (sin archivo).
+     El del iPhone si tiene que ser un PNG aparte: iOS no acepta SVG. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231F1B2E'/%3E%3Cg fill='%23F6F1E9'%3E%3Ccircle cx='116' cy='154' r='15'/%3E%3Ccircle cx='116' cy='192' r='15'/%3E%3Ccircle cx='116' cy='230' r='15'/%3E%3Ccircle cx='116' cy='268' r='15'/%3E%3Ccircle cx='116' cy='306' r='15'/%3E%3Ccircle cx='154' cy='116' r='15'/%3E%3Ccircle cx='154' cy='154' r='15'/%3E%3Ccircle cx='154' cy='306' r='15'/%3E%3Ccircle cx='154' cy='344' r='15'/%3E%3Ccircle cx='192' cy='116' r='15'/%3E%3Ccircle cx='192' cy='344' r='15'/%3E%3Ccircle cx='230' cy='116' r='15'/%3E%3Ccircle cx='230' cy='344' r='15'/%3E%3Ccircle cx='268' cy='116' r='15'/%3E%3Ccircle cx='268' cy='344' r='15'/%3E%3Ccircle cx='306' cy='116' r='15'/%3E%3Ccircle cx='306' cy='154' r='15'/%3E%3Ccircle cx='344' cy='154' r='15'/%3E%3Ccircle cx='344' cy='192' r='15'/%3E%3Ccircle cx='344' cy='230' r='15'/%3E%3Ccircle cx='344' cy='268' r='15'/%3E%3C/g%3E%3Cg fill='%23E2603C'%3E%3Crect x='331' y='331' width='26' height='26' rx='6'/%3E%3Crect x='369' y='331' width='26' height='26' rx='6'/%3E%3Crect x='331' y='369' width='26' height='26' rx='6'/%3E%3Crect x='369' y='369' width='26' height='26' rx='6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="imagenes/icono-180.png">
+
+<!-- ============================================================
+     VISTA PREVIA AL COMPARTIR EL ENLACE
+     Lo que se ve cuando alguien pega la direccion en WhatsApp,
+     Telegram o redes sociales. La imagen DEBE ir con direccion
+     completa (https://...), no vale una ruta relativa, y en JPG:
+     muchas aplicaciones todavia no previsualizan WebP.
+     PENDIENTE: la direccion final. Cuando exista el repo, descomentar
+     og:url y og:image poniendo la direccion buena.
+     ============================================================ -->
+<meta property="og:type"        content="website">
+<!-- <meta property="og:url"   content="https://qrafta.github.io/PENDIENTE/"> -->
+<meta property="og:title"       content="Qrafta · Tarjetas digitales a medida">
+<meta property="og:description" content="Tarjetas de presentación digitales hechas a medida, que se abren desde un QR.">
+<!-- <meta property="og:image" content="https://qrafta.github.io/PENDIENTE/imagenes/preview.jpg"> -->
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale"      content="es_ES">
+<meta name="twitter:card"       content="summary_large_image">
+
+<!-- Ficha para buscadores (invisible). El correo NO va aqui a proposito:
+     estaria escrito en claro y se saltaria la proteccion antispam.
+     PENDIENTE: anadir "url" con la direccion final. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Qrafta",
+  "description": "Tarjetas de presentación digitales a medida, que se abren desde un código QR.",
+  "sameAs": ["https://www.instagram.com/qrafta.studio/"]
+}
+</script>
+
+<style>
+/* ============================================================
+   1. VARIABLES  —  TODO EL ESTILO SE CAMBIA DESDE AQUI
+   Paleta de la marca: tinta #1F1B2E, terracota #E2603C, crema #F6F1E9.
+   Diseno PROVISIONAL, a la espera de la referencia definitiva.
+   ============================================================ */
+:root {
+
+  /* --- Tipografias -------------------------------------------------
+     Sin fuentes descargadas: las del sistema pesan 0 KB.
+     Para cambiar la del titulo, cambiar SOLO --fuente-titulo.        */
+  --fuente-titulo:   Georgia, "Times New Roman", serif;    /* marca y titulos */
+  --fuente-texto:    system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /* Tamanos (se adaptan solos entre movil y escritorio) */
+  --tam-marca:        clamp(3rem, 17vw, 5.2rem);   /* "qrafta" en la cabecera */
+  --tam-h2:           clamp(1.35rem, 6vw, 1.9rem);
+  --tam-texto:        1rem;
+  --grosor-marca:     700;
+  --espaciado-marca:  -0.02em;
+
+  /* --- Colores de la marca ----------------------------------------- */
+  --tinta:            #1F1B2E;
+  --terracota:        #E2603C;
+  --crema:            #F6F1E9;
+
+  /* --- Colores de la pagina (modo claro) ---------------------------
+     Fondo general y texto                                            */
+  --color-fondo:            var(--crema);
+  --color-texto:            var(--tinta);
+  --color-texto-suave:      #5E5869;      /* explicaciones, pie */
+  /* Terracota mas oscura para TEXTO sobre crema: la de la marca no
+     llega al contraste minimo legible en letra pequena.              */
+  --color-acento-texto:     #B4441E;
+  --color-acento:           var(--terracota);   /* botones, cuadraditos */
+  --color-sobre-acento:     var(--tinta);       /* texto encima de terracota */
+
+  /* Tarjetas (servicios, preguntas) */
+  --color-caja-fondo:       #FFFCF7;
+  --color-caja-borde:       #E6DED1;
+  --caja-redondeo:          18px;
+
+  /* Cabecera oscura con la Q */
+  --color-cabecera-fondo:   var(--tinta);
+  --color-cabecera-texto:   var(--crema);
+  --color-cabecera-rejilla: rgba(246, 241, 233, .07);   /* puntitos del fondo */
+
+  /* Barra de navegacion */
+  --color-barra-fondo:      rgba(246, 241, 233, .94);
+  --color-barra-texto:      #5E5869;
+  --color-barra-activo:     var(--tinta);
+  --color-barra-borde:      #E6DED1;
+
+  /* Separadores de puntos */
+  --color-puntos:           #B7AE9F;
+  --tam-punto:              3px;
+  --separacion-puntos:      10px;
+
+  /* Lightbox (ampliacion de una maqueta) */
+  --color-lightbox-fondo:   rgba(20, 17, 30, .94);
+  --color-lightbox-texto:   var(--crema);
+
+  /* Maquetas de ejemplo: cada una con su paleta, para ensenar que cada
+     tarjeta lleva los colores de su cliente. (fondo, texto, acento)   */
+  --maqueta-artista-fondo:  #F3F0EA;  --maqueta-artista-texto:  #2B2A28;  --maqueta-artista-acento:  #4398CE;
+  --maqueta-rest-fondo:     #2E3B2F;  --maqueta-rest-texto:     #F1EAD8;  --maqueta-rest-acento:     #D9A441;
+  --maqueta-evento-fondo:   #2A1E3F;  --maqueta-evento-texto:   #FFFFFF;  --maqueta-evento-acento:   #FF5C8A;
+  --maqueta-tienda-fondo:   #FFFFFF;  --maqueta-tienda-texto:   #1D1D1D;  --maqueta-tienda-acento:   #E2603C;
+
+  /* --- Medidas ----------------------------------------------------- */
+  --ancho-maximo:     980px;   /* ancho maximo del contenido en pantalla grande */
+  --margen-lateral:   20px;    /* aire a izquierda y derecha */
+  --alto-barra:       52px;
+  --ancho-movil:      150px;   /* ancho de cada maqueta de movil */
+  --tam-q-cabecera:   clamp(120px, 42vw, 190px);   /* la Q grande */
+  --duracion-puntos:  .5s;     /* aparicion de cada punto de la Q */
+}
+
+/* --- Modo oscuro: se activa solo si el movil esta en oscuro ---------
+   Solo se redefinen colores; nada mas cambia.                        */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-fondo:            var(--tinta);
+    --color-texto:            var(--crema);
+    --color-texto-suave:      #B9B2C7;
+    --color-acento-texto:     var(--terracota);
+    --color-caja-fondo:       #29243B;
+    --color-caja-borde:       #3A3450;
+    --color-cabecera-fondo:   #15121F;
+    --color-barra-fondo:      rgba(31, 27, 46, .94);
+    --color-barra-texto:      #B9B2C7;
+    --color-barra-activo:     var(--crema);
+    --color-barra-borde:      #3A3450;
+    --color-puntos:           #5A5370;
+  }
+}
+
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* para que la barra fija no tape el inicio de la seccion al saltar */
+  scroll-padding-top: calc(var(--alto-barra) + env(safe-area-inset-top, 0px) + 12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--tam-texto);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+[hidden] { display: none !important; }
+
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--color-acento); outline-offset: 3px; }
+
+.contenedor {
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding-left: var(--margen-lateral);
+  padding-right: var(--margen-lateral);
+}
+
+/* solo para lectores de pantalla */
+.oculto {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* enlace "saltar al contenido": solo aparece al tabular */
+.saltar {
+  position: absolute;
+  left: 12px; top: -60px;
+  z-index: 200;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+.saltar:focus { top: 12px; }
+
+/* Botones (Guardar contacto, Compartir, Escribir...) */
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;              /* zona de toque minima */
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .15s ease, background-color .2s ease;
+}
+
+.boton svg { width: 18px; height: 18px; flex: none; }
+
+.boton--principal {
+  background: var(--color-acento);
+  border-color: var(--color-acento);
+  color: var(--color-sobre-acento);
+}
+
+.boton:active { transform: scale(.97); }
+
+@media (hover: hover) {
+  .boton:hover { transform: translateY(-1px); }
+}
+
+
+/* ============================================================
+   3. BARRA DE NAVEGACION (fija arriba)
+   ============================================================ */
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-barra-fondo);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-barra-borde);
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.barra nav {
+  height: var(--alto-barra);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 4vw, 34px);
+  overflow-x: auto;            /* en pantallas muy estrechas, se desliza */
+  scrollbar-width: none;
+}
+
+.barra nav::-webkit-scrollbar { display: none; }
+
+.barra a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--color-barra-texto);
+  text-decoration: none;
+  font-size: .84rem;
+  letter-spacing: .04em;
+  padding: 0 2px;
+  border-bottom: 2px solid transparent;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.barra a.activo {
+  color: var(--color-barra-activo);
+  border-bottom-color: var(--color-acento);
+}
+
+
+/* ============================================================
+   4. CABECERA (la Q, la marca y los botones)
+   ============================================================ */
+.cabecera {
+  background-color: var(--color-cabecera-fondo);
+  /* rejilla de puntos muy tenue: el motivo de la marca */
+  background-image: radial-gradient(circle, var(--color-cabecera-rejilla) 1.5px, transparent 1.6px);
+  background-size: 18px 18px;
+  color: var(--color-cabecera-texto);
+  text-align: center;
+  padding: clamp(40px, 12vw, 80px) 0 clamp(44px, 12vw, 80px);
+}
+
+.q-grande {
+  display: block;
+  width: var(--tam-q-cabecera);
+  height: var(--tam-q-cabecera);
+  margin: 0 auto;
+  color: var(--color-cabecera-texto);
+}
+
+/* Los puntos de la Q aparecen uno detras de otro y los cuadros del QR
+   al final. Cada pieza lleva style="--i: n" con su turno.            */
+.q-grande .pieza {
+  animation: aparecer var(--duracion-puntos) ease-out both;
+  animation-delay: calc(var(--i) * 40ms);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(.3); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .q-grande .pieza { animation: none; }
+}
+
+.marca {
+  font-family: var(--fuente-titulo);
+  font-weight: var(--grosor-marca);
+  font-size: var(--tam-marca);
+  letter-spacing: var(--espaciado-marca);
+  text-transform: lowercase;     /* el logo va en minusculas */
+  line-height: 1;
+  margin: 18px 0 0;
+}
+
+.lema-marca {
+  margin: 12px 0 0;
+  font-size: clamp(.7rem, 3.2vw, .85rem);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--terracota);       /* sobre tinta, la terracota se lee bien */
+}
+
+.cabecera .botones { margin-top: 32px; }
+
+.cabecera .boton { color: var(--color-cabecera-texto); }
+.cabecera .boton--principal { color: var(--color-sobre-acento); }
+
+
+/* ============================================================
+   5. SECCIONES Y SEPARADORES DE PUNTOS
+   ============================================================ */
+/* solo el aire de arriba: los lados los pone .contenedor */
+.seccion { padding-top: clamp(46px, 12vw, 84px); }
+
+.separador {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 clamp(22px, 6vw, 34px);
+}
+
+.separador h2 {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: var(--tam-h2);
+  white-space: nowrap;
+}
+
+.puntos {
+  flex: 1;
+  height: var(--tam-punto);
+  background-image: radial-gradient(
+      circle,
+      var(--color-puntos) calc(var(--tam-punto) / 2),
+      transparent calc(var(--tam-punto) / 2)
+  );
+  background-size: var(--separacion-puntos) var(--tam-punto);
+  background-repeat: repeat-x;
+  background-position: left center;
+}
+
+/* cuadradito terracota: los modulos del QR del logo */
+.modulo {
+  display: inline-block;
+  width: .55em; height: .55em;
+  border-radius: 2px;
+  background: var(--color-acento);
+  flex: none;
+}
+
+.intro {
+  margin: 0 0 22px;
+  color: var(--color-texto-suave);
+  max-width: 560px;
+}
+
+/* Rejilla de cajas: 1 columna en movil, 2 en escritorio */
+.rejilla {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.caja {
+  background: var(--color-caja-fondo);
+  border: 1px solid var(--color-caja-borde);
+  border-radius: var(--caja-redondeo);
+  padding: 20px;
+}
+
+.caja h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.caja p { margin: 0; color: var(--color-texto-suave); }
+
+.icono {
+  width: 26px; height: 26px;
+  flex: none;
+  fill: none;
+  stroke: var(--color-acento-texto);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   6. COMO FUNCIONA (una sola frase, grande)
+   ============================================================ */
+.como-frase {
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.35rem, 6vw, 1.9rem);
+  line-height: 1.3;
+}
+
+/* "ya esta", en terracota */
+.como-frase em {
+  font-style: normal;
+  white-space: nowrap;         /* "ya esta" nunca se parte en dos lineas */
+  color: var(--color-acento-texto);
+}
+
+
+/* ============================================================
+   7. FUNCIONES Y MAQUETAS DE EJEMPLO
+   ============================================================ */
+.funciones {
+  list-style: none;
+  margin: 0 0 clamp(34px, 9vw, 50px);
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.funciones li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-caja-borde);
+}
+
+.funciones li .modulo { transform: translateY(-1px); }
+
+.funciones strong { font-weight: 600; }
+
+.funciones span.detalle { color: var(--color-texto-suave); }
+
+/* boton pequeno "Pruebalo" dentro de la lista */
+.probar {
+  margin-left: auto;
+  flex: none;
+  min-height: 44px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--color-acento-texto);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Fila de maquetas: en movil se desliza de lado */
+.maquetas {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px var(--margen-lateral) 18px;
+  margin: 0 calc(var(--margen-lateral) * -1);
+  scrollbar-width: thin;
+}
+
+.maqueta {
+  flex: none;
+  scroll-snap-align: center;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 26px;
+}
+
+.maqueta figcaption {
+  margin-top: 10px;
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.maqueta figcaption small {
+  display: block;
+  font-weight: 400;
+  font-size: .75rem;
+  color: var(--color-texto-suave);
+}
+
+.aviso-maqueta {
+  font-size: .78rem;
+  color: var(--color-texto-suave);
+  margin: 4px 0 0;
+}
+
+/* --- El movil en miniatura -------------------------------------------
+   Todo lo de dentro se mide en "em", y la letra depende del ancho:
+   cambiando solo --ancho-movil, el dibujo entero crece o mengua.      */
+.movil {
+  --m-fondo: #fff; --m-texto: #222; --m-acento: #888;
+  width: var(--ancho-movil);
+  font-size: calc(var(--ancho-movil) / 13);
+  aspect-ratio: 9 / 18;
+  border: .5em solid #15121F;
+  border-radius: 1.9em;
+  background: var(--m-fondo);
+  color: var(--m-texto);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: .7em;
+  padding: 1.4em .9em .9em;
+  text-align: left;
+  line-height: 1.25;
+  box-shadow: 0 10px 24px rgba(20, 17, 30, .18);
+  transition: transform .2s ease;
+}
+
+@media (hover: hover) {
+  .maqueta:hover .movil { transform: translateY(-3px); }
+}
+
+.movil--artista { --m-fondo: var(--maqueta-artista-fondo); --m-texto: var(--maqueta-artista-texto); --m-acento: var(--maqueta-artista-acento); }
+.movil--rest    { --m-fondo: var(--maqueta-rest-fondo);    --m-texto: var(--maqueta-rest-texto);    --m-acento: var(--maqueta-rest-acento); }
+.movil--evento  { --m-fondo: var(--maqueta-evento-fondo);  --m-texto: var(--maqueta-evento-texto);  --m-acento: var(--maqueta-evento-acento); }
+.movil--tienda  { --m-fondo: var(--maqueta-tienda-fondo);  --m-texto: var(--maqueta-tienda-texto);  --m-acento: var(--maqueta-tienda-acento); }
+
+.movil .m-titulo { font-family: var(--fuente-titulo); font-size: 1.35em; font-weight: 700; }
+.movil .m-sub    { font-size: .8em; opacity: .7; margin-top: -.5em; }
+.movil .m-raya   { height: .45em; border-radius: .3em; background: currentColor; opacity: .18; }
+.movil .m-raya--corta { width: 60%; }
+.movil .m-boton  {
+  margin-top: auto;
+  background: var(--m-acento);
+  color: var(--m-fondo);
+  border-radius: 2em;
+  padding: .55em;
+  font-size: .85em;
+  font-weight: 700;
+  text-align: center;
+}
+.movil .m-pastilla {
+  align-self: flex-start;
+  font-size: .75em;
+  padding: .2em .7em;
+  border-radius: 2em;
+  border: 1px solid var(--m-acento);
+  color: var(--m-acento);
+}
+.movil .m-mosaico { display: grid; grid-template-columns: repeat(3, 1fr); gap: .3em; }
+.movil .m-mosaico i { aspect-ratio: 1; border-radius: .25em; background: var(--m-acento); }
+.movil .m-mosaico i:nth-child(2n) { opacity: .55; }
+.movil .m-mosaico i:nth-child(3n) { opacity: .3; }
+.movil .m-carta { display: grid; gap: .45em; font-size: .85em; }
+.movil .m-carta span { display: flex; gap: .4em; }
+.movil .m-carta span::after {
+  content: ""; flex: 1; border-bottom: 1px dotted currentColor; opacity: .5; margin-bottom: .3em;
+}
+.movil .m-fecha {
+  display: grid; place-items: center;
+  border: 1px solid var(--m-acento);
+  border-radius: .6em;
+  padding: .5em 0;
+  font-weight: 700;
+}
+.movil .m-fecha b { font-size: 2em; line-height: 1; color: var(--m-acento); }
+.movil .m-productos { display: grid; grid-template-columns: 1fr 1fr; gap: .4em; }
+.movil .m-productos i {
+  aspect-ratio: 1; border-radius: .4em;
+  background: linear-gradient(var(--m-acento), var(--m-acento)) bottom / 100% 22% no-repeat, #EFEAE4;
+}
+
+
+/* ============================================================
+   8. PREGUNTAS FRECUENTES (desplegables nativos, sin JS)
+   ============================================================ */
+.preguntas { display: grid; gap: 10px; }
+
+.preguntas details {
+  background: var(--color-caja-fondo);
+  border: 1px solid var(--color-caja-borde);
+  border-radius: 14px;
+}
+
+.preguntas summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.preguntas summary::-webkit-details-marker { display: none; }
+
+/* el "+" que gira a "x" al abrir */
+.preguntas summary::after {
+  content: "+";
+  flex: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--color-acento-texto);
+  transition: transform .2s ease;
+}
+
+.preguntas details[open] summary::after { transform: rotate(45deg); }
+
+.preguntas details p {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: var(--color-texto-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preguntas summary::after { transition: none; }
+}
+
+
+/* ============================================================
+   9. CONTACTO Y PIE
+   ============================================================ */
+.contacto {
+  text-align: center;
+  padding-bottom: 28px;
+}
+
+.contacto .enlaces {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 1.1rem;
+}
+
+.contacto .enlaces a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-puntos);
+}
+
+/* QR para quien entra desde el ordenador (en el movil no se ve:
+   ya estan dentro). PENDIENTE: generarlo cuando haya direccion.   */
+.qr-escritorio { display: none; }
+
+.qr-escritorio .hueco-qr {
+  width: 150px; height: 150px;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--color-puntos);
+  border-radius: 12px;
+  font-size: .75rem;
+  color: var(--color-texto-suave);
+  padding: 12px;
+}
+
+.qr-escritorio p { margin: 0; font-size: .85rem; color: var(--color-texto-suave); }
+
+.pie {
+  margin-top: clamp(40px, 11vw, 60px);
+  padding-top: 22px;
+  padding-bottom: 30px;
+  border-top: 1px solid var(--color-caja-borde);
+  text-align: center;
+  font-size: .74rem;
+  color: var(--color-texto-suave);
+}
+
+.pie p { margin: 0; }
+.pie p + p { margin-top: 6px; }
+
+/* firma: igual que en las tarjetas de los clientes, lo mas discreta posible */
+.credito { font-size: .66rem; opacity: .7; }
+/* el enlace se ve pequeno, pero la zona de toque llega a 44 px */
+.credito a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.credito a:hover, .credito a:focus-visible { text-decoration: underline; }
+
+/* Aviso flotante ("Enlace copiado") */
+.aviso {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 120;
+  background: var(--tinta);
+  color: var(--crema);
+  border: 1px solid #3A3450;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: .9rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+}
+
+
+/* ============================================================
+   10. LIGHTBOX (ampliacion de una maqueta en la misma pagina)
+   ============================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-lightbox-fondo);
+  color: var(--color-lightbox-texto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: calc(60px + env(safe-area-inset-top, 0px)) var(--margen-lateral)
+           calc(28px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+}
+
+/* la maqueta ampliada: mismo dibujo, mas grande */
+.lightbox .movil {
+  --ancho-movil: min(58vw, 34vh, 240px);
+  flex: none;
+}
+
+.lightbox .ficha { text-align: center; max-width: 420px; }
+
+.lightbox .ficha h3 {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: 1.45rem;
+  margin: 0 0 10px;
+}
+
+.lightbox .ficha ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.lightbox .ficha li {
+  font-size: .82rem;
+  padding: 4px 10px;
+  border: 1px solid rgba(246, 241, 233, .35);
+  border-radius: 999px;
+}
+
+.lightbox .cerrar {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 0;
+  color: var(--color-lightbox-texto);
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   11. PANTALLAS GRANDES (la maqueta esta pensada primero para movil)
+   ============================================================ */
+@media (min-width: 720px) {
+  :root {
+    --ancho-movil: 170px;
+  }
+
+  .rejilla { grid-template-columns: 1fr 1fr; }
+
+  .maquetas {
+    justify-content: center;
+    overflow: visible;
+    margin: 0;
+    padding: 4px 0 18px;
+  }
+}
+
+/* El QR solo tiene sentido en un ordenador (raton y pantalla ancha) */
+@media (min-width: 720px) and (hover: hover) and (pointer: fine) {
+  .qr-escritorio { display: block; margin: 0 0 24px; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="saltar" href="#servicios">Saltar al contenido</a>
+
+<!-- ===== Barra fija ===== -->
+<header class="barra">
+  <nav class="contenedor" aria-label="Secciones">
+    <a href="#servicios" data-enlace="servicios">Servicios</a>
+    <a href="#como"      data-enlace="como">Cómo</a>
+    <a href="#ejemplos"  data-enlace="ejemplos">Ejemplos</a>
+    <a href="#dudas"     data-enlace="dudas">Dudas</a>
+    <a href="#contacto"  data-enlace="contacto">Contacto</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== 1. Cabecera ===== -->
+  <section id="inicio" class="cabecera">
+    <div class="contenedor">
+
+      <!-- La Q de puntos del logo, dibujada aqui (sin archivo aparte).
+           Cada pieza lleva su turno (--i) para la animacion de entrada. -->
+      <svg class="q-grande" viewBox="98 98 302 302" aria-hidden="true" focusable="false">
+        <g fill="currentColor">
+          <circle class="pieza" style="--i:0"  cx="154" cy="116" r="13"/>
+          <circle class="pieza" style="--i:1"  cx="192" cy="116" r="13"/>
+          <circle class="pieza" style="--i:2"  cx="230" cy="116" r="13"/>
+          <circle class="pieza" style="--i:3"  cx="268" cy="116" r="13"/>
+          <circle class="pieza" style="--i:4"  cx="306" cy="116" r="13"/>
+          <circle class="pieza" style="--i:5"  cx="306" cy="154" r="13"/>
+          <circle class="pieza" style="--i:6"  cx="344" cy="154" r="13"/>
+          <circle class="pieza" style="--i:7"  cx="344" cy="192" r="13"/>
+          <circle class="pieza" style="--i:8"  cx="344" cy="230" r="13"/>
+          <circle class="pieza" style="--i:9"  cx="344" cy="268" r="13"/>
+          <circle class="pieza" style="--i:10" cx="268" cy="344" r="13"/>
+          <circle class="pieza" style="--i:11" cx="230" cy="344" r="13"/>
+          <circle class="pieza" style="--i:12" cx="192" cy="344" r="13"/>
+          <circle class="pieza" style="--i:13" cx="154" cy="344" r="13"/>
+          <circle class="pieza" style="--i:14" cx="154" cy="306" r="13"/>
+          <circle class="pieza" style="--i:15" cx="116" cy="306" r="13"/>
+          <circle class="pieza" style="--i:16" cx="116" cy="268" r="13"/>
+          <circle class="pieza" style="--i:17" cx="116" cy="230" r="13"/>
+          <circle class="pieza" style="--i:18" cx="116" cy="192" r="13"/>
+          <circle class="pieza" style="--i:19" cx="116" cy="154" r="13"/>
+          <circle class="pieza" style="--i:20" cx="154" cy="154" r="13"/>
+        </g>
+        <g style="fill: var(--terracota)">
+          <rect class="pieza" style="--i:23" x="331" y="331" width="26" height="26" rx="6"/>
+          <rect class="pieza" style="--i:24" x="369" y="331" width="26" height="26" rx="6"/>
+          <rect class="pieza" style="--i:25" x="331" y="369" width="26" height="26" rx="6"/>
+          <rect class="pieza" style="--i:26" x="369" y="369" width="26" height="26" rx="6"/>
+        </g>
+      </svg>
+
+      <h1 class="marca">Qrafta</h1>
+      <p class="lema-marca">Tarjetas digitales a medida</p>
+
+      <div class="botones">
+        <button class="boton boton--principal" type="button" data-accion="vcard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>
+          Guardar contacto
+        </button>
+        <button class="boton" type="button" data-accion="compartir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
+          Compartir
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== 2. Servicios ===== -->
+  <section id="servicios" class="seccion contenedor">
+    <div class="separador">
+      <span class="modulo" aria-hidden="true"></span>
+      <h2>Servicios</h2>
+      <span class="puntos" aria-hidden="true"></span>
+    </div>
+
+    <!-- Una frase con gancho por sector. Anadir o quitar una caja
+         es copiar o borrar un <li>. -->
+    <ul class="rejilla">
+      <li class="caja">
+        <h3>
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.7-.9 1.4-1.9-.4-1.2.4-2.1 1.6-2.1H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>
+          Artistas y exposiciones
+        </h3>
+        <p>Tu obra, en el bolsillo de quien la mira. Un QR en la sala y se llevan tu portfolio, tu historia y tu contacto.</p>
+      </li>
+      <li class="caja">
+        <h3>
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+          Eventos
+        </h3>
+        <p>Todo tu evento en un QR: programa, ubicación y fecha directa al calendario. Sin folletos que acaban en la papelera.</p>
+      </li>
+      <li class="caja">
+        <h3>
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8m-2.5-8v5a2.5 2.5 0 0 0 5 0V3M7 11v10M17 21V3c-2.2 1.2-3.5 3.6-3.5 7v3H17"/></svg>
+          Restaurantes
+        </h3>
+        <p>Tu carta interactiva. Tus clientes la abren desde la mesa con un QR, y tú la cambias sin reimprimir nada.</p>
+      </li>
+      <li class="caja">
+        <h3>
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          Tiendas
+        </h3>
+        <p>Tu escaparate, abierto las 24 horas: catálogo, horario y cómo llegar, a un escaneo de distancia.</p>
+      </li>
+    </ul>
+  </section>
+
+
+  <!-- ===== 3. Como funciona ===== -->
+  <section id="como" class="seccion contenedor">
+    <div class="separador">
+      <span class="modulo" aria-hidden="true"></span>
+      <h2>Cómo funciona</h2>
+      <span class="puntos" aria-hidden="true"></span>
+    </div>
+
+    <!-- A proposito, nada tecnico: una frase y ya. -->
+    <p class="como-frase">Escaneas el QR con el móvil y <em>ya está</em>.</p>
+  </section>
+
+
+  <!-- ===== 4. Ejemplos: funciones + maquetas por sector ===== -->
+  <section id="ejemplos" class="seccion contenedor">
+    <div class="separador">
+      <span class="modulo" aria-hidden="true"></span>
+      <h2>Lo que puede llevar</h2>
+      <span class="puntos" aria-hidden="true"></span>
+    </div>
+
+    <p class="intro">Cada tarjeta se hace a medida. Estas son algunas de las cosas que puede llevar; las que tienen «Pruébalo» las tiene esta misma página.</p>
+
+    <ul class="funciones">
+      <li><span class="modulo" aria-hidden="true"></span>
+        <span><strong>Guardar contacto</strong> <span class="detalle">en la agenda del móvil</span></span>
+        <button class="probar" type="button" data-accion="vcard">Pruébalo</button></li>
+      <li><span class="modulo" aria-hidden="true"></span>
+        <span><strong>Compartir</strong> <span class="detalle">por WhatsApp, correo o redes</span></span>
+        <button class="probar" type="button" data-accion="compartir">Pruébalo</button></li>
+      <li><span class="modulo" aria-hidden="true"></span>
+        <span><strong>Ampliar al tocar</strong> <span class="detalle">obras, platos, productos…</span></span>
+        <button class="probar" type="button" data-accion="ampliar">Pruébalo</button></li>
+      <li><span class="modulo" aria-hidden="true"></span>
+        <span><strong>Preguntas frecuentes</strong> <span class="detalle">desplegables</span></span>
+        <a class="probar" href="#dudas">Pruébalo</a></li>
+    </ul>
+
+    <!-- Maquetas de ejemplo por sector: dibujadas con CSS, sin fotos.
+         No son clientes reales. Al tocar una se amplia con sus funciones
+         tipicas (data-funciones, separadas por "|"): propuesta, revisar. -->
+    <div class="maquetas">
+
+      <figure class="maqueta" role="button" tabindex="0"
+              data-titulo="Artista"
+              data-funciones="Galería con ampliación|Biografía|Exposiciones|Contacto e Instagram">
+        <div class="movil movil--artista" aria-hidden="true">
+          <div class="m-titulo">Tu nombre</div>
+          <div class="m-sub">Artista</div>
+          <div class="m-mosaico"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="m-raya"></div>
+          <div class="m-raya m-raya--corta"></div>
+          <div class="m-boton">Contacto</div>
+        </div>
+        <figcaption>Artista<small>Maqueta de ejemplo</small></figcaption>
+      </figure>
+
+      <figure class="maqueta" role="button" tabindex="0"
+              data-titulo="Restaurante"
+              data-funciones="Carta|Horario y «abierto ahora»|Reservas|Cómo llegar">
+        <div class="movil movil--rest" aria-hidden="true">
+          <div class="m-titulo">Tu restaurante</div>
+          <div class="m-pastilla">● Abierto</div>
+          <div class="m-carta"><span>Entrantes</span><span>Principales</span><span>Postres</span><span>Bebidas</span></div>
+          <div class="m-boton">Reservar</div>
+        </div>
+        <figcaption>Restaurante<small>Maqueta de ejemplo</small></figcaption>
+      </figure>
+
+      <figure class="maqueta" role="button" tabindex="0"
+              data-titulo="Evento"
+              data-funciones="Programa|Añadir al calendario|Ubicación|Compartir">
+        <div class="movil movil--evento" aria-hidden="true">
+          <div class="m-titulo">Tu evento</div>
+          <div class="m-fecha"><b>00</b>Fecha</div>
+          <div class="m-raya"></div>
+          <div class="m-raya m-raya--corta"></div>
+          <div class="m-boton">Al calendario</div>
+        </div>
+        <figcaption>Evento<small>Maqueta de ejemplo</small></figcaption>
+      </figure>
+
+      <figure class="maqueta" role="button" tabindex="0"
+              data-titulo="Tienda"
+              data-funciones="Catálogo|Horario|Cómo llegar|Redes sociales">
+        <div class="movil movil--tienda" aria-hidden="true">
+          <div class="m-titulo">Tu tienda</div>
+          <div class="m-productos"><i></i><i></i><i></i><i></i></div>
+          <div class="m-raya m-raya--corta"></div>
+          <div class="m-boton">Cómo llegar</div>
+        </div>
+        <figcaption>Tienda<small>Maqueta de ejemplo</small></figcaption>
+      </figure>
+
+    </div>
+    <p class="aviso-maqueta">Toca una maqueta para verla en grande.</p>
+  </section>
+
+
+  <!-- ===== 5. Preguntas frecuentes ===== -->
+  <section id="dudas" class="seccion contenedor">
+    <div class="separador">
+      <span class="modulo" aria-hidden="true"></span>
+      <h2>Preguntas frecuentes</h2>
+      <span class="puntos" aria-hidden="true"></span>
+    </div>
+
+    <!-- Precio y plazos: textos de Qrafta (17-10-2026). Si cambian, solo aqui. -->
+    <div class="preguntas">
+      <details>
+        <summary>¿Hay que instalar algo para verla?</summary>
+        <p>No. Se abre en el navegador del móvil al escanear el QR con la cámara.</p>
+      </details>
+      <details>
+        <summary>¿Puedo cambiar el contenido después de imprimir el QR?</summary>
+        <p>Sí: el QR lleva a una dirección fija, y lo que hay en ella se puede actualizar sin volver a imprimir.</p>
+      </details>
+      <details>
+        <summary>¿Necesito tener web o dominio propio?</summary>
+        <p>No. La tarjeta se publica en una dirección de Qrafta.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto cuesta?</summary>
+        <p>Desde 60 €. Cada tarjeta se hace a medida, así que el precio final depende de lo que necesites. Te enseño un primer boceto gratis y sin compromiso, y solo pagas si te gusta.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto tardas en tenerla?</summary>
+        <p>Tienes el primer boceto en 2-3 días y la tarjeta terminada en una semana, desde que me envías tus textos y fotos.</p>
+      </details>
+    </div>
+  </section>
+
+
+  <!-- ===== 6. Contacto ===== -->
+  <section id="contacto" class="seccion contenedor">
+    <div class="separador">
+      <span class="modulo" aria-hidden="true"></span>
+      <h2>Contacto</h2>
+      <span class="puntos" aria-hidden="true"></span>
+    </div>
+
+    <div class="contacto">
+
+      <!-- Solo en ordenador. PENDIENTE: el QR real, generado con
+           herramientas cuando exista la direccion final. -->
+      <div class="qr-escritorio">
+        <div class="hueco-qr">QR pendiente de la dirección final</div>
+        <p>Escanéalo para abrir esta tarjeta en el móvil.</p>
+      </div>
+
+      <ul class="enlaces">
+        <li>
+          <!-- La direccion se monta con JS para que los bots de spam
+               no la encuentren escrita en el HTML. -->
+          <a id="email" href="#contacto">correo</a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/qrafta.studio/"
+             target="_blank" rel="noopener noreferrer">@qrafta.studio</a>
+        </li>
+      </ul>
+
+      <div class="botones">
+        <button class="boton boton--principal" type="button" data-accion="vcard">Guardar contacto</button>
+        <button class="boton" type="button" data-accion="copiar-correo">Copiar correo</button>
+        <button class="boton" type="button" data-accion="compartir">Compartir</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie contenedor">
+  <!-- El ano se pone solo, no hay que actualizarlo. -->
+  <p>© <span id="anio-actual">2026</span> Qrafta</p>
+  <!-- Firma: la misma que llevan las tarjetas de los clientes -->
+  <p class="credito">
+    <a href="https://www.instagram.com/qrafta.studio/" target="_blank" rel="noopener noreferrer">creado por @qrafta.studio</a>
+  </p>
+</footer>
+
+
+<!-- ===== Lightbox (oculto hasta que se pulsa una maqueta) ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"
+     aria-labelledby="lb-titulo" hidden>
+  <button class="cerrar" id="cerrar-lightbox" type="button" aria-label="Cerrar">&times;</button>
+  <div id="lb-maqueta"></div>
+  <div class="ficha">
+    <h3 id="lb-titulo"></h3>
+    <ul id="lb-funciones" aria-label="Funciones típicas"></ul>
+  </div>
+</div>
+
+<!-- Aviso flotante: los lectores de pantalla lo leen al aparecer -->
+<div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
+
+
+<script>
+/* ============================================================
+   0. DATOS DE CONTACTO  —  si cambian, se cambian SOLO aqui
+   El correo va partido en dos para que los robots de spam no lo
+   encuentren escrito en el HTML.
+   ============================================================ */
+var DATOS = {
+  nombre:    'Qrafta',
+  lema:      'Tarjetas digitales a medida',
+  usuario:   'qraftastudio',
+  dominio:   'gmail.com',
+  instagram: 'https://www.instagram.com/qrafta.studio/',
+  /* Asunto que llega ya escrito al pulsar el correo (cambiable) */
+  asunto:    'Quiero una tarjeta Qrafta'
+};
+
+function correo() { return DATOS.usuario + '@' + DATOS.dominio; }
+
+
+/* ============================================================
+   A. Resaltar en la barra el enlace de la seccion visible
+   ============================================================ */
+(function () {
+  var enlaces = {};
+  document.querySelectorAll('.barra a').forEach(function (a) {
+    enlaces[a.dataset.enlace] = a;
+  });
+
+  var orden = ['servicios', 'como', 'ejemplos', 'dudas', 'contacto'];
+  var enFranja = {};          // secciones que cruzan la franja central
+  var ultimaVisible = false;
+
+  function pintar() {
+    var activa = ultimaVisible ? 'contacto'
+               : orden.filter(function (id) { return enFranja[id]; })[0];
+    for (var k in enlaces) { enlaces[k].classList.remove('activo'); }
+    if (activa && enlaces[activa]) { enlaces[activa].classList.add('activo'); }
+  }
+
+  var observador = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) { enFranja[e.target.id] = e.isIntersecting; });
+    pintar();
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  orden.forEach(function (id) {
+    var s = document.getElementById(id);
+    if (s) { observador.observe(s); }
+  });
+
+  // Contacto es corto y esta al final: nunca sube hasta la franja central.
+  // Se marca en cuanto se ve el 60 % de la seccion.
+  var contacto = document.getElementById('contacto');
+  if (contacto) {
+    new IntersectionObserver(function (entradas) {
+      ultimaVisible = entradas[0].isIntersecting;
+      pintar();
+    }, { threshold: 0.6 }).observe(contacto);
+  }
+})();
+
+
+/* ============================================================
+   B. Correo montado por trozos (anti-spam) y ano del pie
+   ============================================================ */
+(function () {
+  var a = document.getElementById('email');
+  if (a) {
+    a.textContent = correo();
+    a.setAttribute('href', 'mailto:' + correo() + '?subject=' + encodeURIComponent(DATOS.asunto));
+  }
+  var anio = document.getElementById('anio-actual');
+  if (anio) { anio.textContent = new Date().getFullYear(); }
+})();
+
+
+/* ============================================================
+   C. Aviso flotante ("Enlace copiado", "Correo copiado"...)
+   ============================================================ */
+var avisar = (function () {
+  var caja = document.getElementById('aviso');
+  var reloj = null;
+  return function (texto) {
+    caja.textContent = texto;
+    caja.hidden = false;
+    clearTimeout(reloj);
+    reloj = setTimeout(function () { caja.hidden = true; }, 2600);
+  };
+})();
+
+/* Copiar al portapapeles, con plan B para navegadores antiguos */
+function copiar(texto, mensaje) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(texto).then(function () { avisar(mensaje); },
+                                              function () { copiarViejo(texto, mensaje); });
+  } else {
+    copiarViejo(texto, mensaje);
+  }
+}
+
+function copiarViejo(texto, mensaje) {
+  var campo = document.createElement('textarea');
+  campo.value = texto;
+  campo.setAttribute('readonly', '');
+  campo.style.position = 'fixed';
+  campo.style.opacity = '0';
+  document.body.appendChild(campo);
+  campo.select();
+  campo.setSelectionRange(0, texto.length);   // iPhone no se fia de select()
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(campo);
+  avisar(ok ? mensaje : texto);   // si no se pudo copiar, al menos se ve
+}
+
+
+/* ============================================================
+   D. Botones: guardar contacto, compartir, copiar correo
+   Todos los botones con data-accion pasan por aqui.
+   ============================================================ */
+(function () {
+
+  /* Ficha de contacto (vCard 3.0), creada al pulsar: no hay ningun
+     archivo .vcf en la web con el correo escrito. */
+  function guardarContacto() {
+    var url = location.href.split('#')[0];
+    var lineas = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:' + DATOS.nombre,
+      'ORG:' + DATOS.nombre,
+      'X-ABShowAs:COMPANY',               // el iPhone lo trata como empresa
+      'EMAIL;TYPE=INTERNET:' + correo(),
+      'URL:' + url,
+      'X-SOCIALPROFILE;TYPE=instagram:' + DATOS.instagram,
+      'NOTE:' + DATOS.lema,
+      'END:VCARD'
+    ];
+    var archivo = new Blob([lineas.join('\r\n') + '\r\n'], { type: 'text/vcard;charset=utf-8' });
+    var enlace = URL.createObjectURL(archivo);
+
+    // En iPhone/iPad, abrir la ficha directamente muestra "Crear contacto".
+    // En el resto, se descarga qrafta.vcf y el movil ofrece importarlo.
+    var esIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (esIOS) {
+      location.href = enlace;
+    } else {
+      var a = document.createElement('a');
+      a.href = enlace;
+      a.download = 'qrafta.vcf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      avisar('Contacto descargado');
+    }
+    setTimeout(function () { URL.revokeObjectURL(enlace); }, 10000);
+  }
+
+  /* Compartir: el menu del propio movil; si no existe, copia el enlace */
+  function compartir() {
+    var datos = {
+      title: DATOS.nombre,
+      text:  DATOS.nombre + ' · ' + DATOS.lema,
+      url:   location.href.split('#')[0]
+    };
+    // Solo se usa el menu del movil con una direccion web de verdad (https):
+    // abierta como archivo suelto o por http, el navegador lo rechaza.
+    var puede = navigator.share && /^https:/.test(datos.url) &&
+                (!navigator.canShare || navigator.canShare(datos));
+    if (!puede) { copiar(datos.url, 'Enlace copiado'); return; }
+
+    navigator.share(datos).catch(function (err) {
+      // Si la persona cierra el menu, no se hace nada. Cualquier otro fallo
+      // (navegador dentro de Instagram, permisos...) copia el enlace.
+      if (!err || err.name !== 'AbortError') { copiar(datos.url, 'Enlace copiado'); }
+    });
+  }
+
+  var acciones = {
+    'vcard':         guardarContacto,
+    'compartir':     compartir,
+    'copiar-correo': function () { copiar(correo(), 'Correo copiado'); },
+    'ampliar':       function () {
+      var primera = document.querySelector('.maqueta');
+      if (primera) { primera.click(); }
+    }
+  };
+
+  document.querySelectorAll('[data-accion]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var hacer = acciones[b.dataset.accion];
+      if (hacer) { hacer(); }
+    });
+  });
+})();
+
+
+/* ============================================================
+   E. Lightbox: ampliar una maqueta dentro de la misma pagina
+   ============================================================ */
+(function () {
+  var caja      = document.getElementById('lightbox');
+  var hueco     = document.getElementById('lb-maqueta');
+  var titulo    = document.getElementById('lb-titulo');
+  var funciones = document.getElementById('lb-funciones');
+  var cerrar    = document.getElementById('cerrar-lightbox');
+  var ultima    = null;   // maqueta pulsada, para devolverle el foco al cerrar
+
+  function abrir(maqueta) {
+    ultima = maqueta;
+    hueco.innerHTML = '';
+    hueco.appendChild(maqueta.querySelector('.movil').cloneNode(true));
+    titulo.textContent = maqueta.dataset.titulo || '';
+    funciones.innerHTML = '';
+    (maqueta.dataset.funciones || '').split('|').filter(Boolean).forEach(function (f) {
+      var li = document.createElement('li');
+      li.textContent = f;
+      funciones.appendChild(li);
+    });
+    caja.hidden = false;
+    document.body.style.overflow = 'hidden';
+    cerrar.focus();
+  }
+
+  function ocultar() {
+    caja.hidden = true;
+    hueco.innerHTML = '';
+    document.body.style.overflow = '';
+    if (ultima) { ultima.focus(); }
+  }
+
+  document.querySelectorAll('.maqueta').forEach(function (m) {
+    m.addEventListener('click', function () { abrir(m); });
+    m.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); abrir(m); }
+    });
+  });
+
+  cerrar.addEventListener('click', ocultar);
+  caja.addEventListener('click', function (ev) { if (ev.target === caja) { ocultar(); } });
+  document.addEventListener('keydown', function (ev) {
+    if (caja.hidden) { return; }
+    if (ev.key === 'Escape') { ocultar(); }
+    if (ev.key === 'Tab') { ev.preventDefault(); cerrar.focus(); }   // el foco no sale del cuadro
+  });
+})();
+</script>
+
+</body>
+</html>
