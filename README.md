@@ -117,6 +117,15 @@ está». Es lo único que necesita saber quien la recibe.
 - **El QR en pantalla** solo aparece en ordenador (pantalla ancha y ratón): desde el
   móvil ya se está dentro.
 
+### Un solo origen para el QR
+
+El QR impreso y el de la pantalla salen de la misma llamada a
+`herramientas/generar-qr.py`, con la misma dirección: no puede haber uno impreso que
+lleve a un sitio distinto del de la web. El de la pantalla queda escrito dentro del
+HTML como un único trazo SVG (unos 1,5 KB), sin librerías ni imágenes. Va siempre
+oscuro sobre blanco, también en modo oscuro, porque muchos lectores no reconocen un
+QR invertido.
+
 ## Descartado a propósito
 
 - **Selector de idioma**: el público es local.
@@ -138,7 +147,8 @@ imagenes/
   ├── icono-180.png            Icono para la pantalla de inicio del iPhone
   └── preview.jpg              Vista previa al compartir el enlace (1200 × 630)
 herramientas/
-  └── procesar-fotos.py        Originales → versiones web limpias de metadatos
+  ├── procesar-fotos.py        Originales → versiones web limpias de metadatos
+  └── generar-qr.py            Dirección → QR para imprimir y QR de la página
 ```
 
 ## Añadir imágenes
@@ -153,9 +163,20 @@ de 300 KB, borra EXIF y GPS y añade el © en XMP. Cada imagen conserva su nombr
 minúsculas y sin tildes (`Mi Foto.JPG` → `mi-foto.webp`), así que añadir una nueva no
 cambia el nombre de las demás. Después, declarar `width` y `height` en el `<img>`.
 
+## Generar el QR
+
+```bash
+py -m pip install segno        # una sola vez, solo en este equipo
+py herramientas/generar-qr.py https://qrafta.github.io/qrafta/
+```
+
+Deja en `qr/` (no se publica) un SVG para imprenta y un PNG de 2000 px, y reescribe
+el QR de la página entre las marcas `<!-- QR:INICIO -->` y `<!-- QR:FIN -->`. Antes
+de imprimir, escanear el PNG con un móvil y comprobar que abre la dirección buena:
+un QR impreso ya no se puede corregir.
+
 ## Pendiente
 
-- [ ] Generar el QR (pantalla e impreso) con la dirección final
 - [ ] Diseño y tipografía definitivos
 - [ ] Probar *Guardar contacto* y *Compartir* en un iPhone y un Android reales
 - [ ] Quitar `<meta name="robots" content="noindex">` el día del lanzamiento

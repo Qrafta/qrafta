@@ -9,6 +9,10 @@
 fotos originales/
 fotos-originales/
 
+# --- QR para imprimir -------------------------------------------------------
+# Se regeneran con herramientas/generar-qr.py; la web no los necesita.
+qr/
+
 # --- Referencias de diseno --------------------------------------------------
 # Capturas e inspiracion para maquetar: pueden ser trabajo de otros, asi que
 # no se publican.
